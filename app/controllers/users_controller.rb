@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     
     if @user.save
       flash[:success] = 'ユーザを作成しました。'
-      redirect_to root_url
+      redirect_to @user
     else
       flash[:danger] = 'ユーザの作成に失敗しました。'
       render :new
