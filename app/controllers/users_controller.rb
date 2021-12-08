@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :require_user_logged_in, except: [:new, :create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -17,9 +18,10 @@ class UsersController < ApplicationController
     
     if @user.save
       flash[:success] = 'ユーザを作成しました。'
+      session[:user_id] = @user.id
       redirect_to @user
     else
-      flash[:danger] = 'ユーザの作成に失敗しました。'
+      flash.now[:danger] = 'ユーザの作成に失敗しました。'
       render :new
     end
   end
