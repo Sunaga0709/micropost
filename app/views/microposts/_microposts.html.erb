@@ -10,6 +10,12 @@
           <div>
             <p><%= micropost.content %></p>
           </div>
+          <div>
+            <% if micropost.id == current_user.id %>
+              <%= link_to 'Delete', micropost_path(micropost), method: :delete, 
+                  data: {confirm: 'sure?'}, class: 'btn btn-danger btn-sm' %>
+            <% end %>
+          </div>
         </div>
       </li>
     <% end %>

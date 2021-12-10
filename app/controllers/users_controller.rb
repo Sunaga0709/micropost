@@ -7,6 +7,8 @@ class UsersController < ApplicationController
   end
 
   def show
+    @pagy, @microposts = pagy(@user.microposts.order(id: :desc))
+    counts(@user)
   end
 
   def new
@@ -17,11 +19,11 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     
     if @user.save
-      flash[:success] = 'ユーザを作成しました。'
+      flash[:success] = 'Created user.'
       session[:user_id] = @user.id
       redirect_to @user
     else
-      flash.now[:danger] = 'ユーザの作成に失敗しました。'
+      flash.now[:danger] = 'Fail...'
       render :new
     end
   end
@@ -31,17 +33,17 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      flash[:success] = 'ユーザを編集しました。'
+      flash[:success] = 'Edited user.'
       redirect_to @user
     else
-      flash[:danger] = 'ユーザの編集に失敗しました。'
+      flash[:danger] = 'Fail edit user.'
       render :edit
     end
   end
 
   def destroy
     @user.destroy
-    flash[:success] = 'ユーザを削除しました。'
+    flash[:success] = 'Deleted user.'
     redirec_to root_url
   end
 
